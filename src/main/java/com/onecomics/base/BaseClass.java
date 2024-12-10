@@ -10,6 +10,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterSuite;
@@ -42,8 +43,10 @@ public class BaseClass {
 		String browserName = prop.getProperty("browser");
 		try {				
 		if (browserName.contains("Chrome")){
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--headless", "--disable-gpu");
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+			driver = new ChromeDriver(options);
 		}
 		else if (browserName.contains("FireFox")){
 			WebDriverManager.firefoxdriver().setup();
