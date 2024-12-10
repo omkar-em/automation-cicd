@@ -57,6 +57,7 @@ public class LoginPage extends ProjectMethods {
 	
 	public void login(String id, String password) throws InterruptedException {
 		clickElement(preRegisterBtn);
+		Thread.sleep(2000);
 		sendKeys(emailIdTxtBox, id);
 		sendKeys(passwordTxtBox, password);
 		clickElement(signInBtn);
