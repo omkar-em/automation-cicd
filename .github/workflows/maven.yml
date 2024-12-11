@@ -25,33 +25,24 @@ jobs:
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.m2/repository
+          path: C:\\Users\\runneradmin\\.m2\\repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven
+            ${{ runner.os }}-maven-
 
       # Step 4: Install Chrome and ChromeDriver
       - name: Set up Chrome and ChromeDriver
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-          wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
-          unzip chromedriver_linux64.zip
-          sudo mv chromedriver /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
+          choco install googlechrome --no-progress
+          choco install chromedriver --version=$(choco search chromedriver | Select-String -Pattern "chromedriver [\d\.]+" | ForEach-Object { $_ -replace "chromedriver ", "" }) --no-progress
 
       # Step 5: Run tests with Maven
       - name: Run Maven Tests
-        run: mvn clean test -B --file pom.xml
+        run: mvn clean test -B
 
       # Step 6: Upload Test Results
       - name: Upload Test Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Test-Reports
-          path: target/surefire-reports/
-
-      # Step 7: Post Java Home (Optional)
-      - name: Set JAVA_HOME
-        run: echo "JAVA_HOME: $JAVA_HOME"
+          path: target\surefire-reports\
