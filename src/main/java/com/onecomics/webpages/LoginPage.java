@@ -51,7 +51,7 @@ public class LoginPage extends ProjectMethods {
 	@FindBy(xpath = "//span[text()='All Set']")
 	public static WebElement allSetText;
 
-	@FindBy(xpath = "//img[@alt=\"Profile\"]")
+	@FindBy(xpath = "//img[@alt='Profile']")
 	public static WebElement profileIcon;
 
 	@FindBy(xpath = "//div[text()='COPY']")
@@ -72,6 +72,7 @@ public class LoginPage extends ProjectMethods {
 			//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='All Set']")));
 		//Assert.assertTrue(waitUntilTextIsPresent("All Set")); 
 		//System.out.println(allSetText.getText());
+		Thread.sleep(10000);
 		clickElement(profileIcon);
 		clickElement(copyBtn);	
 		clickElement(logoutBtn);
