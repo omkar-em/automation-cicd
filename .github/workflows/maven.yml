@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: temurin  # Specify the JDK distribution
+          distribution: temurin  # Specify JDK distribution
 
       # Step 3: Cache Maven dependencies
       - name: Cache Maven Dependencies
@@ -38,6 +38,7 @@ jobs:
           $ChromeDriverVersion = (choco search chromedriver | Select-String -Pattern "chromedriver [\\d\\.]+").Matches.Value.Split()[-1]
           choco install chromedriver --version=$ChromeDriverVersion --no-progress
         shell: pwsh
+
       # Step 5: Run tests with Maven
       - name: Run Maven Tests
         run: mvn clean test -B
