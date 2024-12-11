@@ -1,8 +1,13 @@
 package com.onecomics.webpages;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.onecomics.projectmethods.ProjectMethods;
@@ -59,6 +64,8 @@ public class LoginPage extends ProjectMethods {
 		clickElement(preRegisterBtn);
 		Thread.sleep(2000);
 //		sendKeys(emailIdTxtBox, id);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("signInName")));
 		emailIdTxtBox.sendKeys(id);
 		sendKeys(passwordTxtBox, password);
 		clickElement(signInBtn);
