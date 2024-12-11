@@ -31,15 +31,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 4: Install Chrome and ChromeDriver
-      - name: Set up Chrome and ChromeDriver
-        run: |
-          choco install googlechrome --no-progress
-          $ChromeVersion = (Get-Command "C:\Program Files\Google\Chrome\Application\chrome.exe").FileVersionInfo.FileVersion.Split('.')[0]
-          $ChromeDriverVersion = (Invoke-RestMethod -Uri "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$ChromeVersion").Trim()
-          Invoke-WebRequest -Uri "https://chromedriver.storage.googleapis.com/$ChromeDriverVersion/chromedriver_win32.zip" -OutFile chromedriver.zip
-          Expand-Archive -Path chromedriver.zip -DestinationPath .
-          Move-Item -Path chromedriver.exe -Destination "C:\Windows\System32" -Force
+      # Step 4: Install Google Chrome (only)
+      - name: Install Google Chrome
+        run: choco install googlechrome --no-progress
         shell: pwsh
 
       # Step 5: Run tests with Maven
