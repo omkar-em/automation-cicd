@@ -43,10 +43,10 @@ public class BaseClass {
 		String browserName = prop.getProperty("browser");
 		try {				
 		if (browserName.contains("Chrome")){
-			ChromeOptions options = new ChromeOptions();
-			options.addArguments("--headless", "--disable-gpu");
+//			ChromeOptions options = new ChromeOptions();
+//			options.addArguments("--headless", "--disable-gpu");
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver(options);
+			driver = new ChromeDriver();
 		}
 		else if (browserName.contains("FireFox")){
 			WebDriverManager.firefoxdriver().setup();
