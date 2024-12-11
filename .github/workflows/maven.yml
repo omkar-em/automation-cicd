@@ -20,27 +20,23 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: temurin  # Specify JDK distribution
+          distribution: temurin
 
-      # Step 3: Cache Maven dependencies
-      - name: Cache Maven Dependencies
-        uses: actions/cache@v3
-        with:
-          path: C:\\Users\\runneradmin\\.m2\\repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      # Step 4: Install Google Chrome (only)
-      - name: Install Google Chrome
-        run: choco install googlechrome --no-progress
+      # Step 3: Check and Install Google Chrome
+      - name: Check and Install Google Chrome
+        run: |
+          if (!(Get-Command "C:\Program Files\Google\Chrome\Application\chrome.exe" -ErrorAction SilentlyContinue)) {
+            choco install googlechrome --no-progress
+          } else {
+            echo "Google Chrome is already installed."
+          }
         shell: pwsh
 
-      # Step 5: Run tests with Maven
+      # Step 4: Run Maven Tests
       - name: Run Maven Tests
         run: mvn clean test -B
 
-      # Step 6: Upload Test Results
+      # Step 5: Upload Test Results
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
