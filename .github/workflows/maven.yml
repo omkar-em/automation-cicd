@@ -35,8 +35,9 @@ jobs:
       - name: Set up Chrome and ChromeDriver
         run: |
           choco install googlechrome --no-progress
-          choco install chromedriver --version=$(choco search chromedriver | Select-String -Pattern "chromedriver [\d\.]+" | ForEach-Object { $_ -replace "chromedriver ", "" }) --no-progress
-
+          $ChromeDriverVersion = (choco search chromedriver | Select-String -Pattern "chromedriver [\\d\\.]+").Matches.Value.Split()[-1]
+          choco install chromedriver --version=$ChromeDriverVersion --no-progress
+        shell: pwsh
       # Step 5: Run tests with Maven
       - name: Run Maven Tests
         run: mvn clean test -B
